@@ -34,7 +34,8 @@ class EncoderLayer(Module):
 
 
 class LanguageModel(Module):
-    def __init__(self, padding_idx=0, bert_hidden_size=768, vocab_size=10201, d_model=512, d_k=64, d_v=64, h=8, d_ff=2048, max_len=54, dropout=.1):
+    def __init__(self, padding_idx=0, bert_hidden_size=768, vocab_size=10201, d_model=512,
+                 d_k=64, d_v=64, h=8, d_ff=2048, max_len=54, dropout=.1):
         super(LanguageModel, self).__init__()
         self.padding_idx = padding_idx
         self.d_model = d_model

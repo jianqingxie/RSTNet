@@ -192,6 +192,10 @@ class TextField(RawField):
         return tensor
 
     def build_vocab(self, *args, **kwargs):
+        # Counter() 计算“可迭代序列中”各个元素（element）的数量
+        # 对列表作用
+        # list_01 = [1,9,9,5,0,8,0,9]
+        # print(Counter(list_01))  #Counter({9: 3, 0: 2, 1: 1, 5: 1, 8: 1})
         counter = Counter()
         sources = []
         for arg in args:

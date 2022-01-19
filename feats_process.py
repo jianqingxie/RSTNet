@@ -1,9 +1,13 @@
+import json
 import os
 import h5py
 import argparse
 
+import numpy
 import torch
 import torch.nn as nn
+from h5py._hl import base
+from tqdm import tqdm
 
 
 class DataProcessor(nn.Module):
@@ -23,14 +27,18 @@ def save_dataset(file_path, feat_paths):
     processor = DataProcessor()  
     with h5py.File(file_path, 'w') as f:
         for i in tqdm(range(len(feat_paths))):
-            feat_path = feat_paths[i]
+            feat_path = os.path.join('/mnt/data/X101-features', 'train2014', feat_paths[i])
+            if not os.path.exists(feat_path):
+                feat_path = os.path.join('/mnt/data/X101-features', 'val2014', feat_paths[i])
+
             img_name = feat_path.split('/')[-1]
 
             img_feat = torch.load(feat_path)   
             img_id = int(img_name.split('.')[0])
 
             img_feat = processor(img_feat)
-            f.create_dataset('%d_grids' % img_id, data=img_feat.numpy()) 
+            data = numpy.asarray(img_feat.numpy(), order="C", dtype=base.guess_dtype(img_feat.numpy()))
+            f.require_dataset('%d_grids' % img_id, shape=data.shape, dtype=data.dtype, data=img_feat.numpy())
         f.close()
 
 
@@ -50,7 +58,7 @@ def get_feat_paths(dir_to_save_feats, data_split='trainval', test2014_info_path=
             assert os.path.exists(feat_path)
             ans.append(feat_path)
         assert len(ans) == 40775
-    assert not ans      # make sure ans list is not empty
+    assert ans      # make sure ans list is not empty
     return ans
     
 
@@ -64,9 +72,9 @@ def main(args):
 if __name__ == '__main__':
     
     parser = argparse.ArgumentParser(description='data process') 
-    parser.add_argument('--dir_to_save_feats', type=str, default='/zhangxuying/Dataset/coco/features/X101-features')
+    parser.add_argument('--dir_to_save_feats', type=str, default='/mnt/data/X101-features')
     parser.add_argument('--data_split', type=str, default='trainval')   # trainval, test
-    parser.add_argument('--test2014_path', type=str, default=None)      # None, image_info_test2014.json
+    parser.add_argument('--test2014_info_path', type=str, default=None)      # None, image_info_test2014.json
     args = parser.parse_args()
         
     main(args)

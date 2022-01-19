@@ -143,6 +143,10 @@ class ScaledDotProductGeometryAttention(nn.Module):
 
         w_g = box_relation_embed_matrix
         w_a = att
+        # clamp(input,min,max,out)
+        # 将输入input张量每个元素的夹紧到区间 [min,max][min,max]，并返回结果到一个新张量
+        # input(Tensor) – 输入张量；min(Number) – 限制范围下限；max(Number) – 限制范围上限；out(Tensor, optional) – 输出张量
+        # torch.log(input) 是以自然数e为底的对数函数
         w_mn = torch.log(torch.clamp(w_g, min=1e-6)) + w_a
         w_mn = torch.softmax(w_mn, -1)  # bs * 8 * r * r
 
