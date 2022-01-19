@@ -1,5 +1,7 @@
+import sys
 from contextlib import contextmanager
 from torch import nn
+sys.path.append("..")
 from utils.typing import *
 
 

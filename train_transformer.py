@@ -159,8 +159,8 @@ if __name__ == '__main__':
     parser.add_argument('--resume_last', action='store_true')
     parser.add_argument('--resume_best', action='store_true')
 
-    parser.add_argument('--features_path', type=str, default='/home/DATA/X101_grid_feats_coco_trainval.hdf5')
-    parser.add_argument('--annotation_folder', type=str, default='/home/DATA/m2_annotations')
+    parser.add_argument('--features_path', type=str, default='/mnt/data/X101-features/X101_grid_feats_coco_trainval.hdf5')
+    parser.add_argument('--annotation_folder', type=str, default='/home/zyq/projects/RESNets/m2_annotations')
 
     parser.add_argument('--logs_folder', type=str, default='tensorboard_logs')
     parser.add_argument('--xe_least', type=int, default=15)

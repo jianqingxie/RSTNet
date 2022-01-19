@@ -3,9 +3,9 @@ import torch
 from torch import nn
 from models.containers import Module
 
-from middle import TensorRecorder
-
-recorder = TensorRecorder()
+# from middle import TensorRecorder
+#
+# recorder = TensorRecorder()
 
 
 class ScaledDotProductAttention(nn.Module):
