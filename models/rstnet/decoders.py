@@ -129,8 +129,8 @@ class TransformerDecoderLayer(Module):
             self.running_seq.add_(1)
             seq = self.running_seq
 
-        out = self.word_emb(input) + self.pos_emb(seq)
-        _, language_feature = self.language_model(input)
+        out = self.word_emb(input.to(torch.int64)) + self.pos_emb(seq.to(torch.int64))
+        _, language_feature = self.language_model(input.to(torch.int64))
 
         # special process for the beam search of inference
         if encoder_output.shape[0] > pos.shape[0]:

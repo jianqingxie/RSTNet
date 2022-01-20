@@ -286,7 +286,7 @@ if __name__ == '__main__':
             print('patience:', data['patience'])
 
     print("Training starts")
-    for e in range(start_epoch, start_epoch + 100):
+    for e in range(start_epoch, start_epoch + 50):
         dataloader_train = DataLoader(train_dataset, batch_size=args.batch_size, shuffle=True, num_workers=args.workers,
                                       drop_last=True)
         dataloader_val = DataLoader(val_dataset, batch_size=args.batch_size, shuffle=False, num_workers=args.workers)
